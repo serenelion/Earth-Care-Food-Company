@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import EmailValidator
+from tinymce.models import HTMLField
 
 
 class NewsletterSubscriber(models.Model):
@@ -34,7 +35,7 @@ class NewsletterCampaign(models.Model):
     ]
 
     subject = models.CharField(max_length=200)
-    content_html = models.TextField(help_text="HTML content of the email")
+    content_html = HTMLField(help_text="HTML content of the email")
     content_text = models.TextField(help_text="Plain text version")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     scheduled_for = models.DateTimeField(null=True, blank=True)

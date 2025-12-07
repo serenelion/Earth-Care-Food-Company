@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/store/', include('store.urls')),
     path('api/coaching/', include('coaching.urls')),
     path('api/newsletter/', include('newsletter.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]

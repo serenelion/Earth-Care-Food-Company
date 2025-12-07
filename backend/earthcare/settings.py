@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     'corsheaders',
+    'tinymce',
     # Local apps
     'store',
     'coaching',
@@ -168,3 +169,13 @@ ADMIN_EMAIL = config('ADMIN_EMAIL', default='admin@earthcare.food')
 
 # Gemini API
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='')
+
+# TinyMCE Configuration
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 500,
+    'width': '100%',
+    'plugins': 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste help wordcount',
+    'toolbar': 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+    'menubar': 'file edit view insert format tools table help',
+    'content_style': 'body { font-family: Inter, sans-serif; font-size: 14px }',
+}

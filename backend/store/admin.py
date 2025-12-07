@@ -11,16 +11,20 @@ class OrderItemInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'unit', 'stock_quantity', 'is_active', 'created_at')
+    list_display_links = ('id', 'name')  # Makes both ID and name clickable
     list_filter = ('is_active', 'created_at')
     search_fields = ('name', 'tagline', 'description')
     list_editable = ('price', 'stock_quantity', 'is_active')
     readonly_fields = ('created_at', 'updated_at')
+    actions = ['activate_products', 'deactivate_products']
+    
     fieldsets = (
         ('Product Information', {
             'fields': ('id', 'name', 'tagline', 'description', 'price', 'unit')
         }),
         ('Images & Benefits', {
-            'fields': ('image', 'benefits')
+            'fields': ('image', 'benefits'),
+            'description': 'Add product image URL and benefits as a JSON list, e.g., ["Benefit 1", "Benefit 2"]'
         }),
         ('Inventory & Stripe', {
             'fields': ('stock_quantity', 'is_active', 'stripe_product_id', 'stripe_price_id')
@@ -30,6 +34,16 @@ class ProductAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+    
+    def activate_products(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, f'{updated} product(s) activated.')
+    activate_products.short_description = 'Activate selected products'
+    
+    def deactivate_products(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, f'{updated} product(s) deactivated.')
+    deactivate_products.short_description = 'Deactivate selected products'
 
 
 @admin.register(Customer)
