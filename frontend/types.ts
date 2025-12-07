@@ -5,7 +5,7 @@ export interface Product {
   name: string;
   tagline: string;
   description: string;
-  price: number;
+  price: string | number; // API returns string, but we handle both
   unit: string;
   image: string;
   benefits: string[];

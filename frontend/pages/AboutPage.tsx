@@ -28,7 +28,7 @@ export const AboutPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-cream-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-earth-800 to-earth-700 text-cream-50 py-24">
+      <section className="bg-gradient-to-br from-earth-800 to-earth-700 text-cream-50 py-24 pt-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">
             Food as Medicine 🌱

@@ -28,7 +28,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({
   const [isProcessing, setIsProcessing] = useState(false);
   
   // Calculate totals
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cartItems.reduce((sum, item) => sum + (parseFloat(String(item.price)) * item.quantity), 0);
   const shipping = subtotal > 50 ? 0 : 10;
   const total = subtotal + shipping;
 
@@ -120,7 +120,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({
                         <div className="flex-1 flex flex-col justify-between">
                           <div>
                             <h3 className="font-bold text-earth-900 line-clamp-1">{item.name}</h3>
-                            <p className="text-sm text-earth-500">{item.unit} • ${item.price.toFixed(2)}</p>
+                            <p className="text-sm text-earth-500">{item.unit} • ${parseFloat(String(item.price)).toFixed(2)}</p>
                           </div>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center border border-earth-200 rounded-lg bg-white">

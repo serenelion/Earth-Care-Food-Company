@@ -52,7 +52,7 @@ export const WholesalePage: React.FC = () => {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-cream-50 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-cream-50 flex items-center justify-center px-4 pt-20">
         <div className="max-w-2xl w-full bg-white rounded-xl shadow-2xl p-12 text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="text-green-600" size={48} />
@@ -78,7 +78,7 @@ export const WholesalePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-cream-50">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-earth-800 to-earth-700 text-cream-50 py-20">
+      <section className="bg-gradient-to-br from-earth-800 to-earth-700 text-cream-50 py-20 pt-32">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">
             Become a Wholesale Partner
