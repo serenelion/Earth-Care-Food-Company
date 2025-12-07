@@ -22,6 +22,19 @@ export const AiAssistant: React.FC = () => {
     }
   }, [messages, isOpen]);
 
+  // ESC key to close
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleEsc);
+      return () => window.removeEventListener('keydown', handleEsc);
+    }
+  }, [isOpen]);
+
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -111,9 +124,11 @@ export const AiAssistant: React.FC = () => {
                 type="text" 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSend()}
                 placeholder="Ask about gut health..."
-                className="flex-1 px-4 py-2 bg-earth-50 border-transparent rounded-xl text-sm focus:bg-white focus:border-earth-300 focus:ring-1 focus:ring-earth-200 outline-none transition text-earth-800 placeholder-earth-400"
+                disabled={isLoading}
+                className="flex-1 px-4 py-2 bg-earth-50 border-transparent rounded-xl text-sm focus:bg-white focus:border-earth-300 focus:ring-1 focus:ring-earth-200 outline-none transition text-earth-800 placeholder-earth-400 disabled:opacity-60"
+                aria-label="Message input"
               />
               <button 
                 onClick={handleSend}
@@ -131,9 +146,10 @@ export const AiAssistant: React.FC = () => {
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          flex items-center justify-center w-14 h-14 rounded-full shadow-xl transition-all duration-300 hover:scale-105
+          flex items-center justify-center w-14 h-14 rounded-full shadow-xl transition-all duration-300 hover:scale-105 active:scale-95
           ${isOpen ? 'bg-earth-700 text-earth-300 rotate-90' : 'bg-cream-500 text-earth-900 hover:bg-cream-400'}
         `}
+        aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         {isOpen ? <X size={28} /> : <MessageCircle size={28} fill="currentColor" />}
       </button>

@@ -25,6 +25,7 @@ export const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
                 <img 
                   src={product.image} 
                   alt={product.name}
+                  loading="lazy"
                   className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                 />
                 <div className="absolute top-4 right-4 bg-white/95 backdrop-blur text-earth-800 font-bold px-4 py-1 rounded-full text-sm shadow-sm">
@@ -57,7 +58,8 @@ export const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
 
                 <button 
                   onClick={() => addToCart(product)}
-                  className="w-full py-4 bg-earth-800 text-cream-50 rounded-xl font-semibold hover:bg-earth-700 transition flex items-center justify-center gap-2 group-hover:bg-earth-900"
+                  className="w-full py-4 bg-earth-800 text-cream-50 rounded-xl font-semibold hover:bg-earth-700 transition flex items-center justify-center gap-2 group-hover:bg-earth-900 active:scale-95"
+                  aria-label={`Add ${product.name} to cart`}
                 >
                   <ShoppingCart size={18} />
                   Add to Box

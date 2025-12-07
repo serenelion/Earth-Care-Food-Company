@@ -3,7 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-cream-50 text-earth-900;
+  }
+
+  /* Better touch target sizes on mobile */
+  @media (hover: none) {
+    button, a {
+      min-height: 44px;
+    }
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Minus, Trash2, ArrowRight, CheckCircle, Lock, CreditCard } from 'lucide-react';
 import { CartItem } from '../types';
+import { ToastType } from './Toast';
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface CartSidebarProps {
   onUpdateQuantity: (id: string, delta: number) => void;
   onRemoveItem: (id: string) => void;
   onClearCart: () => void;
+  showToast: (message: string, type: ToastType) => void;
 }
 
 type CheckoutStep = 'cart' | 'details' | 'success';
@@ -19,7 +21,8 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({
   cartItems,
   onUpdateQuantity,
   onRemoveItem,
-  onClearCart
+  onClearCart,
+  showToast
 }) => {
   const [step, setStep] = useState<CheckoutStep>('cart');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -36,6 +39,17 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({
     }
   }, [isOpen]);
 
+  // ESC key to close
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isOpen, onClose]);
+
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
@@ -46,6 +60,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({
     setIsProcessing(false);
     setStep('success');
     onClearCart();
+    showToast('Order placed successfully!', 'success');
   };
 
   if (!isOpen) return null;

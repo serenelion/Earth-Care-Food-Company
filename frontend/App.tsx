@@ -9,6 +9,7 @@ import { Education } from './components/Education';
 import { AiAssistant } from './components/AiAssistant';
 import { Footer } from './components/Footer';
 import { CartSidebar } from './components/CartSidebar';
+import { Toast, ToastType } from './components/Toast';
 import { AboutPage } from './pages/AboutPage';
 import { WholesalePage } from './pages/WholesalePage';
 import { Section, Product, CartItem } from './types';
@@ -17,16 +18,27 @@ import { getProducts } from './api/client';
 const HomePage: React.FC<{ 
   cart: CartItem[], 
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>,
-  setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ cart, setCart, setIsCartOpen }) => {
+  setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  showToast: (message: string, type: ToastType) => void
+}> = ({ cart, setCart, setIsCartOpen, showToast }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCartButton, setShowCartButton] = useState(false);
   
   const aboutRef = useRef<HTMLDivElement>(null);
   const missionRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
   const homeRef = useRef<HTMLDivElement>(null);
+
+  // Show floating cart button on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowCartButton(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -69,7 +81,8 @@ const HomePage: React.FC<{
       }
       return [...prevCart, { ...product, quantity: 1 }];
     });
-    setIsCartOpen(true);
+    // Show toast notification instead of immediately opening cart
+    showToast(`${product.name} added to cart!`, 'success');
   };
 
   if (loading) {
@@ -104,6 +117,16 @@ const HomePage: React.FC<{
       <div ref={educationRef} id="education">
         <Education />
       </div>
+
+      {/* Floating Cart Button */}
+      {showCartButton && cart.length > 0 && (
+        <button
+          onClick={() => setIsCartOpen(true)}
+          className="fixed bottom-24 right-6 z-40 bg-earth-800 text-cream-50 px-6 py-3 rounded-full shadow-2xl hover:bg-earth-700 transition-all duration-300 flex items-center gap-2 animate-in slide-in-from-bottom-10"
+        >
+          View Cart ({cart.reduce((acc, item) => acc + item.quantity, 0)})
+        </button>
+      )}
     </main>
   );
 };
@@ -111,6 +134,11 @@ const HomePage: React.FC<{
 const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
+
+  const showToast = (message: string, type: ToastType) => {
+    setToast({ message, type });
+  };
 
   const updateQuantity = (id: string, delta: number) => {
     setCart(prevCart => {
@@ -140,7 +168,7 @@ const App: React.FC = () => {
         <Navbar cartCount={cartCount} onCartClick={() => setIsCartOpen(true)} />
         
         <Routes>
-          <Route path="/" element={<HomePage cart={cart} setCart={setCart} setIsCartOpen={setIsCartOpen} />} />
+          <Route path="/" element={<HomePage cart={cart} setCart={setCart} setIsCartOpen={setIsCartOpen} showToast={showToast} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/wholesale" element={<WholesalePage />} />
         </Routes>
@@ -156,7 +184,16 @@ const App: React.FC = () => {
           onUpdateQuantity={updateQuantity}
           onRemoveItem={removeFromCart}
           onClearCart={clearCart}
+          showToast={showToast}
         />
+
+        {toast && (
+          <Toast 
+            message={toast.message} 
+            type={toast.type} 
+            onClose={() => setToast(null)} 
+          />
+        )}
       </div>
     </Router>
   );
