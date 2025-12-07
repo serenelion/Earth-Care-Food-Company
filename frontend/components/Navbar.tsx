@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingBag, Sprout } from 'lucide-react';
-import { Section } from '../types';
 
 interface NavbarProps {
-  onNavigate: (section: Section) => void;
   onCartClick: () => void;
   cartCount: number;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onNavigate, onCartClick, cartCount }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onCartClick, cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
-  const handleNav = (section: Section) => {
-    onNavigate(section);
+  const scrollToSection = (sectionId: string) => {
+    if (!isHome) {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
     setIsOpen(false);
   };
 
@@ -22,9 +30,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, onCartClick, cartCou
         <div className="flex justify-between items-center h-20">
           
           {/* Logo */}
-          <div 
-            className="flex-shrink-0 flex items-center cursor-pointer gap-2" 
-            onClick={() => handleNav(Section.HOME)}
+          <Link 
+            to="/"
+            className="flex-shrink-0 flex items-center gap-2"
           >
             <div className="w-10 h-10 bg-earth-700 rounded-full flex items-center justify-center text-cream-100">
               <Sprout size={24} />
@@ -32,14 +40,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, onCartClick, cartCou
             <span className="font-serif font-bold text-lg md:text-xl text-earth-800 tracking-tight">
               Earth Care Food Company
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <button onClick={() => handleNav(Section.ABOUT)} className="text-earth-700 hover:text-earth-500 font-medium transition">Our Story</button>
-            <button onClick={() => handleNav(Section.MISSION)} className="text-earth-700 hover:text-earth-500 font-medium transition">Mission</button>
-            <button onClick={() => handleNav(Section.PRODUCTS)} className="text-earth-700 hover:text-earth-500 font-medium transition">Shop Dairy</button>
-            <button onClick={() => handleNav(Section.EDUCATION)} className="text-earth-700 hover:text-earth-500 font-medium transition">Gut Wisdom</button>
+            <Link to="/about" className="text-earth-700 hover:text-earth-500 font-medium transition">About</Link>
+            <button onClick={() => scrollToSection('mission')} className="text-earth-700 hover:text-earth-500 font-medium transition">Mission</button>
+            <button onClick={() => scrollToSection('products')} className="text-earth-700 hover:text-earth-500 font-medium transition">Shop</button>
+            <button onClick={() => scrollToSection('education')} className="text-earth-700 hover:text-earth-500 font-medium transition">Education</button>
+            <Link to="/wholesale" className="text-earth-700 hover:text-earth-500 font-medium transition">Wholesale</Link>
             
             <button 
               onClick={onCartClick}
@@ -81,10 +90,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, onCartClick, cartCou
       {isOpen && (
         <div className="md:hidden bg-cream-50 border-t border-earth-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <button onClick={() => handleNav(Section.ABOUT)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Our Story</button>
-            <button onClick={() => handleNav(Section.MISSION)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Mission</button>
-            <button onClick={() => handleNav(Section.PRODUCTS)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Shop Dairy</button>
-            <button onClick={() => handleNav(Section.EDUCATION)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Gut Wisdom</button>
+            <Link to="/about" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">About</Link>
+            <button onClick={() => scrollToSection('mission')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Mission</button>
+            <button onClick={() => scrollToSection('products')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Shop</button>
+            <button onClick={() => scrollToSection('education')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Education</button>
+            <Link to="/wholesale" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Wholesale</Link>
           </div>
         </div>
       )}

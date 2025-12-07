@@ -7,12 +7,20 @@ backend/.env
 backend/db.sqlite3
 backend/staticfiles/
 backend/media/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
 
 # Node
 frontend/node_modules/
 frontend/dist/
 frontend/.env.local
 frontend/.env.production
+node_modules/
+dist/
+.npm
+.yarn
 
 # IDE
 .vscode/
@@ -20,11 +28,20 @@ frontend/.env.production
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
-Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!README.md
+
+# CI/CD
+.github/
 
 # Logs
 *.log
-npm-debug.log*
+logs/

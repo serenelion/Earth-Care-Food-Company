@@ -1,0 +1,51 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:$COMMIT_SHA'
+      - '-f'
+      - 'Dockerfile.backend'
+      - '.'
+    
+  # Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:$COMMIT_SHA'
+  
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'earth-care-backend'
+      - '--image'
+      - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:$COMMIT_SHA'
+      - '--region'
+      - 'us-west1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'DEBUG=False,ALLOWED_HOSTS=.run.app,.earthcare.food,earthcare.food'
+      - '--set-secrets'
+      - 'SECRET_KEY=DJANGO_SECRET_KEY:latest,STRIPE_SECRET_KEY=STRIPE_SECRET:latest,STRIPE_PUBLISHABLE_KEY=STRIPE_PUB:latest,SENDGRID_API_KEY=SENDGRID_KEY:latest,GEMINI_API_KEY=GEMINI_KEY:latest'
+      - '--min-instances'
+      - '0'
+      - '--max-instances'
+      - '10'
+      - '--memory'
+      - '512Mi'
+      - '--cpu'
+      - '1'
+      - '--port'
+      - '8080'
+
+images:
+  - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:$COMMIT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

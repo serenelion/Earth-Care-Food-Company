@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Loader2, Bot, X, MessageCircle, Sparkles } from 'lucide-react';
-import { askEarthCareAI } from '../services/geminiService';
+import { Send, Loader2, Bot, X, MessageCircle } from 'lucide-react';
+import { sendChatMessage } from '../api/client';
 
 export const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,6 +9,7 @@ export const AiAssistant: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId] = useState(() => `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -29,10 +30,18 @@ export const AiAssistant: React.FC = () => {
     setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setIsLoading(true);
 
-    const aiResponse = await askEarthCareAI(userMessage);
-
-    setMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
-    setIsLoading(false);
+    try {
+      const response = await sendChatMessage(sessionId, userMessage);
+      setMessages(prev => [...prev, { role: 'ai', text: response.message }]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => [...prev, { 
+        role: 'ai', 
+        text: "I'm currently having trouble connecting. Please try again later." 
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
