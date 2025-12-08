@@ -6,6 +6,7 @@ import { Mission } from './components/Mission';
 import { About } from './components/About';
 import { Products } from './components/Products';
 import { Education } from './components/Education';
+import { NewsletterSignup } from './components/NewsletterSignup';
 import { AiAssistant } from './components/AiAssistant';
 import { Footer } from './components/Footer';
 import { CartSidebar } from './components/CartSidebar';
@@ -118,6 +119,8 @@ const HomePage: React.FC<{
       <div ref={educationRef} id="education">
         <Education />
       </div>
+
+      <NewsletterSignup />
 
       {/* Floating Cart Button */}
       {showCartButton && cart.length > 0 && (

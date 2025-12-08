@@ -21,7 +21,7 @@ export const Hero: React.FC<HeroProps> = ({ onShopClick }) => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <span className="inline-block py-1 px-3 rounded-full bg-cream-500/20 text-cream-200 text-sm font-semibold tracking-wider mb-6 border border-cream-500/30">
-          TRANSFORMING FOOD WASTE INTO MEDICINE
+          SMALL-BATCH • FARM-TO-TABLE • NOT SOLD IN STORES
         </span>
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-cream-50 mb-6 leading-tight">
           Healing the Earth.<br />

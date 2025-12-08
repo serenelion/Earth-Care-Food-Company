@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '../types';
-import { Check, ShoppingCart, ArrowRight } from 'lucide-react';
+import { Check, ShoppingCart, ArrowRight, Leaf } from 'lucide-react';
 
 interface ProductsProps {
   products: Product[];
@@ -12,14 +12,21 @@ export const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
   return (
     <section className="py-24 bg-cream-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-serif font-bold text-earth-800 mb-4">Reclaimed Superfoods</h2>
-          <p className="text-earth-600 max-w-2xl mx-auto text-lg">
-            Sourced directly from End of the Lane Farms. We don't just sell food; we circulate nutrition that was meant to be lost.
+        <div className="text-center mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full mb-4">
+            <Leaf size={18} className="text-green-600" />
+            <span className="font-semibold text-sm">Small-Batch • Farm-to-Table • Food as Medicine</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-serif font-bold text-earth-800 mb-4">Current Menu</h2>
+          <p className="text-earth-600 max-w-2xl mx-auto text-lg mb-2">
+            Limited-batch healing foods crafted with intention. Unlike mass-market products, each batch is made fresh from rescued ingredients.
+          </p>
+          <p className="text-earth-700 font-semibold">
+            Subscribe below to be notified when new medicine becomes available.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
           {products.map((product) => (
             <div key={product.id} className="group bg-white rounded-2xl shadow-xl shadow-earth-900/5 hover:shadow-earth-900/10 transition duration-300 overflow-hidden border border-earth-100 flex flex-col transform hover:-translate-y-1">
               <Link to={`/product/${product.id}`} className="relative h-64 overflow-hidden bg-earth-100 block">
