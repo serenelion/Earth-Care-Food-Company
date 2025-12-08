@@ -48,7 +48,7 @@ steps:
       - '8080'
 
 substitutions:
-  _COMMIT_SHA: '${COMMIT_SHA}'
+  _USE_LATEST: 'true'
 
 images:
   - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:$COMMIT_SHA'
