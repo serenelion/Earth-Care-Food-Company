@@ -47,9 +47,6 @@ steps:
       - '--port'
       - '8080'
 
-substitutions:
-  _USE_LATEST: 'true'
-
 images:
   - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:$COMMIT_SHA'
   - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:latest'
