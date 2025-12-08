@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/newsletter/', include('newsletter.urls')),
     path('tinymce/', include('tinymce.urls')),
     # Serve React app for all other routes (must be last)
-    re_path(r'^.*$', ReactAppView.as_view(), name='react-app'),
+    # Exclude admin, api, tinymce, static, and media paths
+    re_path(r'^(?!admin/|api/|tinymce/|static/|media/).*$', ReactAppView.as_view(), name='react-app'),
 ]
