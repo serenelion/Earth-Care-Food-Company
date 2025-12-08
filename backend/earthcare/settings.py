@@ -28,6 +28,19 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
+# CSRF Settings for production
+CSRF_TRUSTED_ORIGINS = [
+    'https://earthcare.food',
+    'https://*.earthcare.food',
+    'https://*.run.app',
+]
+
+# Session cookie settings
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+
 
 # Application definition
 
