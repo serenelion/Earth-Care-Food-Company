@@ -1,108 +1,60 @@
 #!/bin/bash
-
-# Earth Care Food Company - Quick Deploy Script for Google Cloud Run
-# Usage: ./deploy.sh [backend|frontend|all]
+# Earth Care Food Company - Deployment Script
+# This script helps you deploy to Google Cloud Run
 
 set -e
 
 PROJECT_ID="gen-lang-client-0308665609"
 REGION="us-west1"
-REGISTRY="us-west1-docker.pkg.dev"
+SERVICE_NAME="earth-care-backend"
+REPO_NAME="earth-care-food-company"
 
-echo "🌱 Earth Care Food Company - Deployment Script"
+echo "🌿 Earth Care Food Company - Cloud Deployment"
 echo "=============================================="
+echo ""
 
-# Function to deploy backend
-deploy_backend() {
-    echo ""
-    echo "📦 Building and deploying backend..."
-    
-    gcloud builds submit \
-        --config=cloudbuild.yaml \
-        --project=${PROJECT_ID}
-    
-    echo "✅ Backend deployed successfully!"
-    
-    # Get backend URL
-    BACKEND_URL=$(gcloud run services describe earth-care-backend \
-        --region=${REGION} \
-        --project=${PROJECT_ID} \
-        --format='value(status.url)')
-    
-    echo "🔗 Backend URL: ${BACKEND_URL}"
-}
+# Check if gcloud is installed
+if ! command -v gcloud &> /dev/null; then
+    echo "❌ gcloud CLI not found. Please install it first:"
+    echo "   https://cloud.google.com/sdk/docs/install"
+    exit 1
+fi
 
-# Function to deploy frontend
-deploy_frontend() {
-    echo ""
-    echo "🎨 Building frontend locally first..."
-    
-    cd frontend
-    npm run build
-    cd ..
-    
-    echo "📦 Building and deploying frontend Docker image..."
-    
-    # Build with backend URL
-    BACKEND_URL=$(gcloud run services describe earth-care-backend \
-        --region=${REGION} \
-        --project=${PROJECT_ID} \
-        --format='value(status.url)' 2>/dev/null || echo "https://api.earthcare.food")
-    
-    docker build \
-        -t ${REGISTRY}/${PROJECT_ID}/earth-care-food-company/frontend:latest \
-        -f Dockerfile.frontend \
-        --build-arg VITE_API_BASE_URL="${BACKEND_URL}/api" \
-        .
-    
-    docker push ${REGISTRY}/${PROJECT_ID}/earth-care-food-company/frontend:latest
-    
-    gcloud run deploy earth-care-frontend \
-        --image=${REGISTRY}/${PROJECT_ID}/earth-care-food-company/frontend:latest \
-        --region=${REGION} \
-        --platform=managed \
-        --allow-unauthenticated \
-        --port=8080 \
-        --project=${PROJECT_ID}
-    
-    echo "✅ Frontend deployed successfully!"
-    
-    # Get frontend URL
-    FRONTEND_URL=$(gcloud run services describe earth-care-frontend \
-        --region=${REGION} \
-        --project=${PROJECT_ID} \
-        --format='value(status.url)')
-    
-    echo "🔗 Frontend URL: ${FRONTEND_URL}"
-}
+# Set the project
+echo "📍 Setting project to: $PROJECT_ID"
+gcloud config set project $PROJECT_ID
 
-# Main deployment logic
-case "$1" in
-    backend)
-        deploy_backend
-        ;;
-    frontend)
-        deploy_frontend
-        ;;
-    all)
-        deploy_backend
-        deploy_frontend
-        ;;
-    *)
-        echo "Usage: $0 {backend|frontend|all}"
-        echo ""
-        echo "Examples:"
-        echo "  $0 backend   - Deploy only backend"
-        echo "  $0 frontend  - Deploy only frontend"
-        echo "  $0 all       - Deploy both backend and frontend"
-        exit 1
-        ;;
-esac
+# Build and push the Docker image
+COMMIT_SHA=$(git rev-parse HEAD)
+IMAGE_NAME="us-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:$COMMIT_SHA"
 
 echo ""
-echo "🎉 Deployment complete!"
+echo "🔨 Building Docker image..."
+echo "   Image: $IMAGE_NAME"
+docker build -t $IMAGE_NAME -f Dockerfile.backend .
+
 echo ""
-echo "📝 Next steps:"
-echo "  1. Configure custom domain at Cloud Console"
-echo "  2. Update Stripe webhook URL"
-echo "  3. Test the deployment"
+echo "📤 Pushing image to Artifact Registry..."
+docker push $IMAGE_NAME
+
+echo ""
+echo "🚀 Deploying to Cloud Run..."
+gcloud run deploy $SERVICE_NAME \
+  --image $IMAGE_NAME \
+  --region $REGION \
+  --platform managed \
+  --allow-unauthenticated \
+  --set-env-vars "DEBUG=False,ALLOWED_HOSTS=.run.app,.earthcare.food,earthcare.food" \
+  --set-secrets "SECRET_KEY=DJANGO_SECRET_KEY:latest,STRIPE_SECRET_KEY=STRIPE_SECRET:latest,STRIPE_PUBLISHABLE_KEY=STRIPE_PUB:latest,SENDGRID_API_KEY=SENDGRID_KEY:latest,GEMINI_API_KEY=GEMINI_KEY:latest" \
+  --min-instances 0 \
+  --max-instances 10 \
+  --memory 512Mi \
+  --cpu 1 \
+  --port 8080
+
+echo ""
+echo "✅ Deployment complete!"
+echo ""
+echo "🌐 Service URL:"
+gcloud run services describe $SERVICE_NAME --region $REGION --format="value(status.url)"
+echo ""
