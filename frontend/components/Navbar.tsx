@@ -44,8 +44,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick, cartCount }) => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-earth-700 hover:text-earth-500 font-medium transition">Home</Link>
             <Link to="/about" className="text-earth-700 hover:text-earth-500 font-medium transition">About</Link>
-            <button onClick={() => scrollToSection('mission')} className="text-earth-700 hover:text-earth-500 font-medium transition">Mission</button>
             <button onClick={() => scrollToSection('products')} className="text-earth-700 hover:text-earth-500 font-medium transition">Shop</button>
             <button onClick={() => scrollToSection('education')} className="text-earth-700 hover:text-earth-500 font-medium transition">Education</button>
             <Link to="/wholesale" className="text-earth-700 hover:text-earth-500 font-medium transition">Wholesale</Link>
@@ -90,8 +90,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick, cartCount }) => {
       {isOpen && (
         <div className="md:hidden bg-cream-50 border-t border-earth-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <Link to="/" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Home</Link>
             <Link to="/about" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">About</Link>
-            <button onClick={() => scrollToSection('mission')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Mission</button>
             <button onClick={() => scrollToSection('products')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Shop</button>
             <button onClick={() => scrollToSection('education')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Education</button>
             <Link to="/wholesale" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Wholesale</Link>
