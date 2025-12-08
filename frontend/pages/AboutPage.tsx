@@ -131,28 +131,30 @@ export const AboutPage: React.FC = () => {
           </h2>
           <div className="prose prose-lg mx-auto text-earth-700 space-y-6">
             <p>
-              Earth Care Food Company was born from a simple question: What if we could transform 
-              food "waste" into superfood, no matter where it comes from?
+              For millennia, humans understood a simple truth: what appears to be waste is simply 
+              nourishment waiting for transformation. We've reconnected with this ancient wisdom.
             </p>
             <p>
-              Starting with surplus grass-fed milk from local Catskills farms, we've expanded our mission globally. 
-              We rescue nutrient-rich ingredients from regenerative farms and communities worldwide, bringing 
-              foods that were destined to rot back into the cycle of nourishment.
+              Where industrial systems see surplus to discard, we see medicine to preserve. Grass-fed 
+              milk that exceeds market quotas becomes probiotic-rich yogurt and kefir. Whey that others 
+              pour down drains becomes bioavailable protein powder. Abundant mangos destined for compost 
+              piles become concentrated sources of vitamins and energy.
             </p>
             <p>
-              Our newest offering comes from Ometepe Island in Nicaragua, where abundant mangos were going to 
-              waste. Through social permaculture, we've helped friends turn their compost into food as medicine 
-              for communities far away.
+              This is the alchemy of permaculture: every output becomes an input. Every "problem" 
+              reveals a solution. Every community's abundance can heal another community's deficiency. 
+              From the Catskills to Ometepe Island, we partner with farmers and food artisans who 
+              understand that nature creates no waste—only cycles.
             </p>
             <p>
-              Every product we make follows permaculture principles: close the loop, create no 
-              waste, and give back to the earth. From our Ancestral Kefir, fermented with heirloom 
-              grains for 24 hours, to our Sun-Dried Mango from Nicaragua, we're cultivating a regenerative 
-              food system that spans continents.
+              Our work is guided by a timeless principle: <strong className="text-earth-900">let food be thy medicine</strong>. 
+              By preserving nutrients through fermentation, dehydration, and cold-processing, we transform 
+              perishable abundance into shelf-stable superfoods that travel across oceans to nourish minds, 
+              bodies, and communities.
             </p>
             <p className="font-bold text-earth-900">
-              We're not just making food—we're cultivating a regenerative food system, one delicious 
-              product at a time, connecting communities through the power of social permaculture.
+              We're not inventing something new—we're remembering something eternal. The earth provides 
+              abundance. Our role is simply to catch it, preserve it, and share it before it returns to soil.
             </p>
           </div>
         </div>
