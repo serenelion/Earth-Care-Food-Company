@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Check } from 'lucide-react';
+import { subscribeNewsletter } from '../api/client';
 
 export const NewsletterSignup: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -18,26 +19,13 @@ export const NewsletterSignup: React.FC = () => {
     setStatus('loading');
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/newsletter/subscribe/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        setStatus('success');
-        setMessage('Welcome to our community! Check your email for updates.');
-        setEmail('');
-      } else {
-        const data = await response.json();
-        setStatus('error');
-        setMessage(data.message || 'Something went wrong. Please try again.');
-      }
-    } catch (error) {
+      const result = await subscribeNewsletter(email, '', 'homepage');
+      setStatus('success');
+      setMessage(result.message || 'Welcome to our community! Check your email for updates.');
+      setEmail('');
+    } catch (error: any) {
       setStatus('error');
-      setMessage('Connection error. Please try again later.');
+      setMessage(error.response?.data?.message || 'Connection error. Please try again later.');
     }
 
     setTimeout(() => {

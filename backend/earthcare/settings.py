@@ -163,8 +163,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS Settings
 CORS_ALLOWED_ORIGINS = [
     config('FRONTEND_URL', default='http://localhost:3000'),
+    'https://earthcare.food',
+    'https://www.earthcare.food',
 ]
 CORS_ALLOW_CREDENTIALS = True
+
+# For production where frontend and backend are on same domain
+if not config('DEBUG', default=True, cast=bool):
+    CORS_ALLOW_ALL_ORIGINS = False
+    # Since we're serving frontend from same domain, we don't need CORS in production
+    # But keep it for API calls from other sources if needed
+
+# CSRF Settings
+CSRF_TRUSTED_ORIGINS = [
+    'https://earthcare.food',
+    'https://www.earthcare.food',
+    'https://*.run.app',  # Cloud Run domains
+]
 
 # REST Framework Settings
 REST_FRAMEWORK = {
