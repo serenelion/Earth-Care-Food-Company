@@ -112,7 +112,7 @@ export const NewsletterSignup: React.FC = () => {
         </form>
 
         <p className="mt-6 text-sm text-cream-400">
-          🌿 Join 1,000+ people healing through food. Unsubscribe anytime.
+          🌿 Join friends from all over the world healing through food. Unsubscribe anytime.
         </p>
       </div>
     </section>
