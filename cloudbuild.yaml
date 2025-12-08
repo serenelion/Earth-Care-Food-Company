@@ -33,7 +33,7 @@ steps:
       - 'managed'
       - '--allow-unauthenticated'
       - '--set-env-vars'
-      - 'DEBUG=False,USE_CLOUD_SQL=True'
+      - 'DEBUG=False,USE_CLOUD_SQL=False'
       - '--set-env-vars'
       - '^:^ALLOWED_HOSTS=.run.app,.earthcare.food,earthcare.food'
       - '--set-env-vars'
