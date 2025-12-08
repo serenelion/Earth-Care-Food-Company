@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Mail, MapPin, Sprout } from 'lucide-react';
 import { getProducts } from '../api/client';
 import { Product } from '../types';
 
 export const Footer: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const location = useLocation();
-  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,16 +19,6 @@ export const Footer: React.FC = () => {
     fetchProducts();
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    if (!isHome) {
-      window.location.href = `/#${sectionId}`;
-      return;
-    }
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
   return (
     <footer className="bg-earth-900 text-earth-200 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,14 +59,7 @@ export const Footer: React.FC = () => {
                 <Link to="/about" className="hover:text-cream-100 transition">About</Link>
               </li>
               <li>
-                <button onClick={() => scrollToSection('mission')} className="hover:text-cream-100 transition text-left">
-                  Mission
-                </button>
-              </li>
-              <li>
-                <button onClick={() => scrollToSection('education')} className="hover:text-cream-100 transition text-left">
-                  Education
-                </button>
+                <Link to="/shop" className="hover:text-cream-100 transition">Shop</Link>
               </li>
               <li>
                 <Link to="/wholesale" className="hover:text-cream-100 transition">Wholesale</Link>
@@ -99,9 +80,9 @@ export const Footer: React.FC = () => {
               ))}
               {products.length > 4 && (
                 <li>
-                  <button onClick={() => scrollToSection('products')} className="hover:text-cream-100 transition text-left">
+                  <Link to="/shop" className="hover:text-cream-100 transition">
                     View All Products →
-                  </button>
+                  </Link>
                 </li>
               )}
             </ul>

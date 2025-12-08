@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Heart, Leaf, Users } from 'lucide-react';
 import { subscribeNewsletter } from '../api/client';
 
@@ -7,6 +7,10 @@ export const AboutPage: React.FC = () => {
   const [firstName, setFirstName] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();

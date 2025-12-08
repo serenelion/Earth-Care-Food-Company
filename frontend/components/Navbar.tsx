@@ -10,19 +10,6 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onCartClick, cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === '/';
-
-  const scrollToSection = (sectionId: string) => {
-    if (!isHome) {
-      window.location.href = `/#${sectionId}`;
-      return;
-    }
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsOpen(false);
-  };
 
   return (
     <nav className="fixed w-full z-50 bg-cream-50/90 backdrop-blur-md border-b border-earth-200">
@@ -46,8 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick, cartCount }) => {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-earth-700 hover:text-earth-500 font-medium transition">Home</Link>
             <Link to="/about" className="text-earth-700 hover:text-earth-500 font-medium transition">About</Link>
-            <button onClick={() => scrollToSection('products')} className="text-earth-700 hover:text-earth-500 font-medium transition">Shop</button>
-            <button onClick={() => scrollToSection('education')} className="text-earth-700 hover:text-earth-500 font-medium transition">Education</button>
+            <Link to="/shop" className="text-earth-700 hover:text-earth-500 font-medium transition">Shop</Link>
             <Link to="/wholesale" className="text-earth-700 hover:text-earth-500 font-medium transition">Wholesale</Link>
             
             <button 
@@ -92,8 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick, cartCount }) => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link to="/" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Home</Link>
             <Link to="/about" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">About</Link>
-            <button onClick={() => scrollToSection('products')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Shop</button>
-            <button onClick={() => scrollToSection('education')} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Education</button>
+            <Link to="/shop" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Shop</Link>
             <Link to="/wholesale" onClick={() => setIsOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-earth-700 hover:bg-earth-100 rounded-md">Wholesale</Link>
           </div>
         </div>

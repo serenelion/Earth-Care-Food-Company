@@ -1,11 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
-interface HeroProps {
-  onShopClick: () => void;
-}
-
-export const Hero: React.FC<HeroProps> = ({ onShopClick }) => {
+export const Hero: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="relative pt-20 pb-16 md:pt-32 md:pb-24 flex items-center min-h-[90vh] overflow-hidden bg-earth-800">
       
@@ -33,10 +31,10 @@ export const Hero: React.FC<HeroProps> = ({ onShopClick }) => {
         
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <button 
-            onClick={onShopClick}
+            onClick={() => navigate('/shop')}
             className="px-8 py-4 bg-cream-500 hover:bg-cream-400 text-earth-900 font-bold rounded-full transition transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg shadow-cream-500/20"
           >
-            Shop the Collection <ArrowRight size={20} />
+            Shop Food as Medicine <ArrowRight size={20} />
           </button>
         </div>
 

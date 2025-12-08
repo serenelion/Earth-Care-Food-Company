@@ -4,7 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Mission } from './components/Mission';
 import { About } from './components/About';
-import { Products } from './components/Products';
+import { FeaturedProduct } from './components/FeaturedProduct';
 import { Education } from './components/Education';
 import { NewsletterSignup } from './components/NewsletterSignup';
 import { AiAssistant } from './components/AiAssistant';
@@ -14,6 +14,7 @@ import { Toast, ToastType } from './components/Toast';
 import { AboutPage } from './pages/AboutPage';
 import { WholesalePage } from './pages/WholesalePage';
 import { ProductPage } from './pages/ProductPage';
+import { ShopPage } from './pages/ShopPage';
 import { Section, Product, CartItem } from './types';
 import { getProducts } from './api/client';
 
@@ -23,15 +24,17 @@ const HomePage: React.FC<{
   setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>,
   showToast: (message: string, type: ToastType) => void
 }> = ({ cart, setCart, setIsCartOpen, showToast }) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
   const [showCartButton, setShowCartButton] = useState(false);
   
   const aboutRef = useRef<HTMLDivElement>(null);
   const missionRef = useRef<HTMLDivElement>(null);
-  const productsRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
   const homeRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Show floating cart button on scroll
   useEffect(() => {
@@ -41,35 +44,6 @@ const HomePage: React.FC<{
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data.results || data);
-      } catch (error) {
-        console.error('Failed to fetch products:', error);
-        // Fallback to empty array on error
-        setProducts([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
-
-  const handleNavigate = (section: Section) => {
-    const refs = {
-      [Section.HOME]: homeRef,
-      [Section.ABOUT]: aboutRef,
-      [Section.MISSION]: missionRef,
-      [Section.PRODUCTS]: productsRef,
-      [Section.EDUCATION]: educationRef,
-    };
-    
-    // @ts-ignore
-    refs[section]?.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const addToCart = (product: Product) => {
     setCart(prevCart => {
@@ -87,21 +61,10 @@ const HomePage: React.FC<{
     showToast(`${product.name} added to cart!`, 'success');
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-cream-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-earth-700 mx-auto mb-4"></div>
-          <p className="text-earth-700 text-lg">Loading products...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <main>
       <div ref={homeRef} id="home">
-        <Hero onShopClick={() => handleNavigate(Section.PRODUCTS)} />
+        <Hero />
       </div>
       
       <div ref={aboutRef} id="about">
@@ -112,9 +75,7 @@ const HomePage: React.FC<{
         <Mission />
       </div>
       
-      <div ref={productsRef} id="products">
-        <Products products={products} addToCart={addToCart} />
-      </div>
+      <FeaturedProduct addToCart={addToCart} />
 
       <div ref={educationRef} id="education">
         <Education />
@@ -174,6 +135,20 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage cart={cart} setCart={setCart} setIsCartOpen={setIsCartOpen} showToast={showToast} />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/shop" element={<ShopPage onAddToCart={(product) => {
+            setCart(prevCart => {
+              const existingItem = prevCart.find(item => item.id === product.id);
+              if (existingItem) {
+                return prevCart.map(item => 
+                  item.id === product.id 
+                    ? { ...item, quantity: item.quantity + 1 } 
+                    : item
+                );
+              }
+              return [...prevCart, { ...product, quantity: 1 }];
+            });
+            showToast(`${product.name} added to cart!`, 'success');
+          }} />} />
           <Route path="/wholesale" element={<WholesalePage />} />
           <Route path="/product/:id" element={<ProductPage onAddToCart={(product) => {
             setCart(prevCart => {
