@@ -52,7 +52,7 @@ class Command(BaseCommand):
                 'description': 'Hand-selected mangos from Ometepe Island, dehydrated using traditional methods to preserve nutrients and natural sweetness. These mangos were destined to rot back into compost, but now they travel across oceans to nourish communities far away.',
                 'price': 15.00,
                 'unit': '8oz Bag',
-                'image': 'https://images.unsplash.com/photo-1614595685421-f6cb8b40c62d?q=80&w=800&auto=format&fit=crop',
+                'image': 'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?q=80&w=800&auto=format&fit=crop',
                 'benefits': ['Rich in Vitamin C', 'Natural Energy Boost', 'Supports Immune System'],
                 'is_active': True,
                 'stock_quantity': 60
