@@ -47,7 +47,7 @@ export const Mission: React.FC = () => {
                 <div>
                   <h3 className="text-xl font-bold mb-2">Connecting Communities</h3>
                   <p className="text-cream-100/80 leading-relaxed">
-                    By subscribing directly, you join a global network of regenerative farmers and food artisans. No chemicals, no middlemen, just pure nutrition delivered from farm to community,跨越continents.
+                    By subscribing directly, you join a global network of regenerative farmers and food artisans. No chemicals, no middlemen, just pure nutrition delivered from farm to community, across continents.
                   </p>
                 </div>
               </div>
