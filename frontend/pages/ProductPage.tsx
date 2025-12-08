@@ -17,12 +17,54 @@ export const ProductPage: React.FC<ProductPageProps> = ({ onAddToCart }) => {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     const fetchProduct = async () => {
       try {
         const data = await getProducts();
         const products = data.results || data;
         const foundProduct = products.find((p: Product) => p.id === id);
         setProduct(foundProduct || null);
+        
+        // Update meta tags dynamically for product
+        if (foundProduct) {
+          document.title = `${foundProduct.name} | Earth Care Food Company`;
+          
+          // Update or create meta tags
+          const updateMetaTag = (property: string, content: string) => {
+            let element = document.querySelector(`meta[property="${property}"]`);
+            if (!element) {
+              element = document.querySelector(`meta[name="${property}"]`);
+            }
+            if (element) {
+              element.setAttribute('content', content);
+            } else {
+              const meta = document.createElement('meta');
+              meta.setAttribute(property.startsWith('og:') || property.startsWith('twitter:') ? 'property' : 'name', property);
+              meta.setAttribute('content', content);
+              document.head.appendChild(meta);
+            }
+          };
+          
+          const productUrl = `https://earthcare.food/product/${foundProduct.id}`;
+          const productDescription = foundProduct.description || foundProduct.tagline;
+          
+          // Update Open Graph tags
+          updateMetaTag('og:title', `${foundProduct.name} | Earth Care Food Company`);
+          updateMetaTag('og:description', productDescription);
+          updateMetaTag('og:image', foundProduct.image);
+          updateMetaTag('og:url', productUrl);
+          updateMetaTag('og:type', 'product');
+          
+          // Update Twitter tags
+          updateMetaTag('twitter:title', `${foundProduct.name} | Earth Care Food Company`);
+          updateMetaTag('twitter:description', productDescription);
+          updateMetaTag('twitter:image', foundProduct.image);
+          updateMetaTag('twitter:url', productUrl);
+          
+          // Update description
+          updateMetaTag('description', productDescription);
+        }
       } catch (error) {
         console.error('Failed to fetch product:', error);
       } finally {
