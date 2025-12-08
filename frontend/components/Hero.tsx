@@ -28,8 +28,8 @@ export const Hero: React.FC<HeroProps> = ({ onShopClick }) => {
           <span className="text-cream-400">Through Your Gut.</span>
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-xl text-cream-100/90 leading-relaxed">
-          We rescue nutrient-rich raw dairy from regenerative farms, transforming potential waste into bioavailable superfoods. 
-          <strong>Better for the soil, better for your mind.</strong>
+          We rescue nutrient-rich foods from regenerative farms and communities worldwide, transforming potential waste into bioavailable superfoods. 
+          <strong>Better for the soil, better for your mind, better for global communities.</strong>
         </p>
         
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
@@ -48,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({ onShopClick }) => {
           </div>
           <div>
             <p className="text-2xl font-serif text-cream-100">Zero</p>
-            <p className="text-sm uppercase tracking-widest">Waste</p>
+            <p className="text-sm uppercase tracking-widest">Waste Global</p>
           </div>
           <div>
             <p className="text-2xl font-serif text-cream-100">Catskills</p>

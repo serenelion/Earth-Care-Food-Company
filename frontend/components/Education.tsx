@@ -9,7 +9,7 @@ export const Education: React.FC = () => {
           <span className="text-earth-600 font-bold tracking-widest uppercase text-sm mb-2 block">The Science</span>
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-earth-900 mb-6">The Gut-Brain Connection</h2>
           <p className="text-lg text-earth-700">
-            Your gut is your "second brain." The trillions of bacteria in your microbiome communicate directly with your nervous system, influencing your mood, energy, and clarity.
+            Your gut is your "second brain." The trillions of bacteria in your microbiome communicate directly with your nervous system, influencing your mood, energy, and clarity. Different foods offer unique pathways to wellness.
           </p>
         </div>
 
@@ -20,7 +20,7 @@ export const Education: React.FC = () => {
             </div>
             <h3 className="text-2xl font-bold text-earth-900 mb-3">Psychobiotics</h3>
             <p className="text-earth-600">
-              Our kefir and yogurt are rich in beneficial bacteria strains known to produce neurotransmitters like serotonin and dopamine, directly uplifting your mood.
+              Our kefir and yogurt are rich in beneficial bacteria strains known to produce neurotransmitters like serotonin and dopamine, directly uplifting your mood. Meanwhile, our dried mango delivers vitamin C to support immune-brain communication.
             </p>
           </div>
 
@@ -30,7 +30,7 @@ export const Education: React.FC = () => {
             </div>
             <h3 className="text-2xl font-bold text-earth-900 mb-3">Inflammation Defense</h3>
             <p className="text-earth-600">
-              100% grass-fed dairy is higher in Omega-3 fatty acids and CLA, potent anti-inflammatories that protect your brain from oxidative stress.
+              100% grass-fed dairy is higher in Omega-3 fatty acids and CLA, while our sun-dried mango preserves polyphenols that work together as potent anti-inflammatories protecting your brain from oxidative stress.
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export const Education: React.FC = () => {
             </div>
             <h3 className="text-2xl font-bold text-earth-900 mb-3">Bioavailable Energy</h3>
             <p className="text-earth-600">
-              Raw whey protein provides complete amino acids in their native structure, ensuring maximum absorption for muscle repair and cognitive endurance.
+              Raw whey protein provides complete amino acids in their native structure, while natural fruit sugars in our dried mango offer clean, sustained energy without crashing.
             </p>
           </div>
         </div>

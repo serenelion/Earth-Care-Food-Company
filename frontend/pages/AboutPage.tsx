@@ -132,22 +132,27 @@ export const AboutPage: React.FC = () => {
           <div className="prose prose-lg mx-auto text-earth-700 space-y-6">
             <p>
               Earth Care Food Company was born from a simple question: What if we could transform 
-              dairy "waste" into superfood?
+              food "waste" into superfood, no matter where it comes from?
             </p>
             <p>
-              Working with local Catskills farms, we rescue surplus grass-fed milk and transform 
-              it into thick, probiotic-rich Greek yogurt. Instead of discarding the whey—a common 
-              practice that wastes incredible nutrition—we cold-process it into our Regenerative 
-              Whey Powder.
+              Starting with surplus grass-fed milk from local Catskills farms, we've expanded our mission globally. 
+              We rescue nutrient-rich ingredients from regenerative farms and communities worldwide, bringing 
+              foods that were destined to rot back into the cycle of nourishment.
+            </p>
+            <p>
+              Our newest offering comes from Ometepe Island in Nicaragua, where abundant mangos were going to 
+              waste. Through social permaculture, we've helped friends turn their compost into food as medicine 
+              for communities far away.
             </p>
             <p>
               Every product we make follows permaculture principles: close the loop, create no 
-              waste, and give back to the earth. Our Ancestral Kefir, fermented with heirloom 
-              grains for 24 hours, brings ancient wisdom into modern wellness.
+              waste, and give back to the earth. From our Ancestral Kefir, fermented with heirloom 
+              grains for 24 hours, to our Sun-Dried Mango from Nicaragua, we're cultivating a regenerative 
+              food system that spans continents.
             </p>
             <p className="font-bold text-earth-900">
               We're not just making food—we're cultivating a regenerative food system, one delicious 
-              product at a time.
+              product at a time, connecting communities through the power of social permaculture.
             </p>
           </div>
         </div>

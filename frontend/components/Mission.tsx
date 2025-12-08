@@ -21,9 +21,9 @@ export const Mission: React.FC = () => {
                   <Recycle size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">Eliminating Waste</h3>
+                  <h3 className="text-xl font-bold mb-2">Eliminating Waste Globally</h3>
                   <p className="text-cream-100/80 leading-relaxed">
-                    We partner with "End of the Lane Farms" to take 100% grass-fed milk that would otherwise be discarded due to market surplus and transform it into nutrient-dense food.
+                    We partner with regenerative farms and communities worldwide to take nutrient-rich foods that would otherwise be discarded and transform them into superfoods that nourish distant communities.
                   </p>
                 </div>
               </div>
@@ -33,9 +33,9 @@ export const Mission: React.FC = () => {
                   <Sprout size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">Regenerative Farming</h3>
+                  <h3 className="text-xl font-bold mb-2">Social Permaculture</h3>
                   <p className="text-cream-100/80 leading-relaxed">
-                    Our partner farms in the Catskills use rotational grazing to sequester carbon, build soil health, and ensure our cows live their best lives on open pastures.
+                    From rotational grazing in the Catskills to sun-drying mangos on Ometepe Island, we support farming practices that regenerate soil health and strengthen communities through sustainable food systems.
                   </p>
                 </div>
               </div>
@@ -45,9 +45,9 @@ export const Mission: React.FC = () => {
                   <Heart size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">Direct to Community</h3>
+                  <h3 className="text-xl font-bold mb-2">Connecting Communities</h3>
                   <p className="text-cream-100/80 leading-relaxed">
-                    By subscribing directly, you bypass the industrial food complex. No chemicals, no middlemen, just pure nutrition delivered from the farm to your door.
+                    By subscribing directly, you join a global network of regenerative farmers and food artisans. No chemicals, no middlemen, just pure nutrition delivered from farm to community,跨越continents.
                   </p>
                 </div>
               </div>
