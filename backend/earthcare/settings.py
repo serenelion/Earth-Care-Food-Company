@@ -160,18 +160,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+import os
+
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Only add STATICFILES_DIRS if frontend_build/assets exists
-import os
+# Add frontend build assets to be collected as static files
 frontend_assets = BASE_DIR / 'frontend_build' / 'assets'
 if os.path.exists(frontend_assets):
-    STATICFILES_DIRS = [frontend_assets]
+    STATICFILES_DIRS = [
+        ('assets', frontend_assets),  # Map frontend_build/assets to /static/assets
+    ]
 else:
     STATICFILES_DIRS = []
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# WhiteNoise configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
