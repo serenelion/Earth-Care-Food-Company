@@ -4,9 +4,9 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:${COMMIT_SHA:-latest}'
+      - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:$COMMIT_SHA'
       - '-t'
-      - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:latest'
+      - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:latest'
       - '-f'
       - 'Dockerfile.backend'
       - '.'
@@ -16,7 +16,7 @@ steps:
     args:
       - 'push'
       - '--all-tags'
-      - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend'
+      - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend'
   
   # Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -26,7 +26,7 @@ steps:
       - 'deploy'
       - 'earth-care-backend'
       - '--image'
-      - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:${COMMIT_SHA:-latest}'
+      - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:$COMMIT_SHA'
       - '--region'
       - 'us-west1'
       - '--platform'
@@ -47,9 +47,12 @@ steps:
       - '--port'
       - '8080'
 
+substitutions:
+  _COMMIT_SHA: '${COMMIT_SHA}'
+
 images:
-  - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:${COMMIT_SHA:-latest}'
-  - 'us-west1-docker.pkg.dev/${PROJECT_ID}/earth-care-food-company/backend:latest'
+  - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:$COMMIT_SHA'
+  - 'us-west1-docker.pkg.dev/$PROJECT_ID/earth-care-food-company/backend:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
