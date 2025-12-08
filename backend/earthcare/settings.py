@@ -65,7 +65,7 @@ ROOT_URLCONF = 'earthcare.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'frontend_build'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,6 +132,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Only add STATICFILES_DIRS if frontend_build/assets exists
+import os
+frontend_assets = BASE_DIR / 'frontend_build' / 'assets'
+if os.path.exists(frontend_assets):
+    STATICFILES_DIRS = [frontend_assets]
+else:
+    STATICFILES_DIRS = []
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = 'media/'

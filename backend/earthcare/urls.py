@@ -15,7 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from .views import ReactAppView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,6 @@ urlpatterns = [
     path('api/coaching/', include('coaching.urls')),
     path('api/newsletter/', include('newsletter.urls')),
     path('tinymce/', include('tinymce.urls')),
+    # Serve React app for all other routes (must be last)
+    re_path(r'^.*$', ReactAppView.as_view(), name='react-app'),
 ]
