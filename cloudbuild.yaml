@@ -37,7 +37,7 @@ steps:
       - '--set-env-vars'
       - '^:^ALLOWED_HOSTS=.run.app,.earthcare.food,earthcare.food'
       - '--set-secrets'
-      - 'SECRET_KEY=DJANGO_SECRET_KEY:latest,STRIPE_SECRET_KEY=STRIPE_SECRET:latest,STRIPE_PUBLISHABLE_KEY=STRIPE_PUB:latest,SENDGRID_API_KEY=SENDGRID_KEY:latest,GEMINI_API_KEY=GEMINI_KEY:latest'
+      - 'SECRET_KEY=DJANGO_SECRET_KEY:latest,STRIPE_SECRET_KEY=STRIPE_SECRET:latest,STRIPE_PUBLISHABLE_KEY=STRIPE_PUB:latest,SENDGRID_API_KEY=SENDGRID_KEY:latest,GEMINI_API_KEY=GEMINI_KEY:latest,ADMIN_USERNAME=ADMIN_USERNAME:latest,ADMIN_PASSWORD=ADMIN_PASSWORD:latest'
       - '--min-instances'
       - '0'
       - '--max-instances'

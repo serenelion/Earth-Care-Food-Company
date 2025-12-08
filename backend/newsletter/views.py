@@ -3,8 +3,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
@@ -12,11 +10,9 @@ from .models import NewsletterSubscriber
 from .serializers import NewsletterSubscribeSerializer
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class NewsletterSubscribeView(APIView):
     """
     Handle newsletter subscriptions
-    CSRF exempt because this is a public API endpoint
     """
     def post(self, request):
         serializer = NewsletterSubscribeSerializer(data=request.data)

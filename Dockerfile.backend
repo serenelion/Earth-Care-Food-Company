@@ -42,7 +42,8 @@ COPY --from=frontend-builder /frontend/dist /app/frontend_build
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Run migrations and start server
+# Run migrations, seed data, create admin, and start server
 CMD python manage.py migrate && \
     python manage.py seed_products && \
+    python manage.py create_admin && \
     gunicorn earthcare.wsgi:application --bind 0.0.0.0:$PORT --workers 3

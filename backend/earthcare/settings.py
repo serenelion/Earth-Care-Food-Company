@@ -60,11 +60,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# WhiteNoise settings to serve all static files including frontend assets
-WHITENOISE_USE_FINDERS = True
-WHITENOISE_AUTOREFRESH = True
-WHITENOISE_INDEX_FILE = True
-
 ROOT_URLCONF = 'earthcare.urls'
 
 TEMPLATES = [
@@ -135,22 +130,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-import os
-
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Add frontend build assets to be collected as static files
+# Only add STATICFILES_DIRS if frontend_build/assets exists
+import os
 frontend_assets = BASE_DIR / 'frontend_build' / 'assets'
 if os.path.exists(frontend_assets):
-    STATICFILES_DIRS = [
-        ('assets', frontend_assets),  # Map frontend_build/assets to /static/assets
-    ]
+    STATICFILES_DIRS = [frontend_assets]
 else:
     STATICFILES_DIRS = []
 
-# WhiteNoise configuration
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -163,23 +154,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS Settings
 CORS_ALLOWED_ORIGINS = [
     config('FRONTEND_URL', default='http://localhost:3000'),
-    'https://earthcare.food',
-    'https://www.earthcare.food',
 ]
 CORS_ALLOW_CREDENTIALS = True
-
-# For production where frontend and backend are on same domain
-if not config('DEBUG', default=True, cast=bool):
-    CORS_ALLOW_ALL_ORIGINS = False
-    # Since we're serving frontend from same domain, we don't need CORS in production
-    # But keep it for API calls from other sources if needed
-
-# CSRF Settings
-CSRF_TRUSTED_ORIGINS = [
-    'https://earthcare.food',
-    'https://www.earthcare.food',
-    'https://*.run.app',  # Cloud Run domains
-]
 
 # REST Framework Settings
 REST_FRAMEWORK = {
